@@ -1,0 +1,10 @@
+fields:
+  cookie_name:
+    type: text
+    instructions: Cookie used to skip static file cache from the reverse proxy for authenticated users.
+  user_roles:
+    type: list
+    instructions: Skip static file cache only for some user roles.
+  user_groups:
+    type: list
+    instructions: Skip static file cache only for some user groups.

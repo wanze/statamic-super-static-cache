@@ -1,0 +1,6 @@
+name: 'Super Static Cache'
+version: '1.0'
+description: "Extends Statamic's static file cache to skip caching for authenticated users."
+url: 'https://github.com/wanze/SuperStaticCache'
+developer: 'Stefan Wanzenried'
+developer_url: 'https://github.com/wanze'
