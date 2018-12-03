@@ -5,15 +5,12 @@ php:
     - 7.2
 
 install:
-    # Add composer's global bin directory to the path
-    - export PATH="$HOME/.composer/vendor/bin:$PATH"
-
     # Install Statamic CLI
     - composer global require statamic/cli
 
     # Install Statamic
-    - cd ../
-    - statamic new statamic-addon-test --no-interaction
+    - cd ../..
+    - ~/.composer/vendor/bin/statamic new statamic-addon-test --no-interaction
 
     # Install dev dependencies of Statamic
     - cd statamic-addon-test/statamic && composer install
@@ -23,5 +20,5 @@ install:
     - ln -s $TRAVIS_BUILD_DIR site/addons
 
 script:
-    - cd ../statamic-addon-test
+    - cd ../../statamic-addon-test
     - php please test:addons
