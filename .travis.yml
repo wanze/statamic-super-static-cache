@@ -20,5 +20,4 @@ install:
     - ln -s $TRAVIS_BUILD_DIR site/addons
 
 script:
-    - cd ../../statamic-addon-test
     - php please test:addons
