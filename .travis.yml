@@ -10,7 +10,7 @@ install:
 
     # Install Statamic
     - cd ../..
-    - ~/.composer/vendor/bin/statamic new statamic-addon-test --no-interaction
+    - ~/.config/composer/vendor/bin/statamic new statamic-addon-test --no-interaction
 
     # Install dev dependencies of Statamic
     - cd statamic-addon-test/statamic && composer install
