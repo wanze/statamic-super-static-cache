@@ -1,0 +1,23 @@
+language: php
+
+php:
+    - 7.1
+    - 7.2
+
+install:
+    # Install Statamic CLI
+    - composer global require statamic/cli
+
+    # Install Statamic
+    - cd ../..
+    - ~/.config/composer/vendor/bin/statamic new statamic-addon-test --no-interaction
+
+    # Install dev dependencies of Statamic
+    - cd statamic-addon-test/statamic && composer install
+    - cd ../
+
+    # Symlink addon to site/addons
+    - ln -s $TRAVIS_BUILD_DIR site/addons
+
+script:
+    - php please test:addons
