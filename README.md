@@ -1,5 +1,8 @@
 # Super Static Cache
 
+[![Build Status](https://travis-ci.org/wanze/SuperStaticCache.svg?branch=master)](https://travis-ci.org/wanze/SuperStaticCache)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Statamic Addon to prevent static file caching for authenticated users. Useful if you want to cache pages only
 for anonymous users, e.g. if they contain some sort of tracking javascript that should not be included
 for authenticated users.
@@ -24,7 +27,7 @@ The addon offers the following settings:
 * **`User roles`** Skip static file cache only for some user roles.
 * **`User groups`** Skip static file cache only for some user groups.
 
-Next, you need to configure the reverse proxy to skip the static file cache if the above cookie exists.
+Next, you need to configure the reverse proxy to skip the static file cache if the configured cookie exists.
 
 ### Apache
 
