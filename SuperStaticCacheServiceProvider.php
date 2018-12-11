@@ -2,7 +2,6 @@
 
 namespace Statamic\Addons\SuperStaticCache;
 
-use Statamic\API\User;
 use Statamic\Data\Services\UserGroupsService;
 use Statamic\Extend\ServiceProvider;
 use Statamic\StaticCaching\FileCacher;
@@ -13,7 +12,7 @@ use Statamic\API\Config;
 use Statamic\API\Str;
 
 /**
- * Service provider for the "Anonymous Static Cache" addon.
+ * Service provider for the "Super Static Cache" addon.
  */
 class SuperStaticCacheServiceProvider extends ServiceProvider
 {
@@ -24,20 +23,19 @@ class SuperStaticCacheServiceProvider extends ServiceProvider
 
     private function extendCacherService()
     {
-        // This addon currently only works if static_caching_type is set to 'file'.
-        // Reason is that the authenticated user is not available when the
-        // Statamic\StaticCaching\Middleware\Retrieve middleware resolves the cached page.
-        if (!$this->app[Cacher::class] instanceof FileCacher) {
-            return;
+        $cache = $this->app->make(Repository::class);
+        $config = $this->getStaticCachingConfig();
+        $userGroupsService = $this->app->make(UserGroupsService::class);
+        $cacheExclusionChecker = new CacheExclusionChecker($this->getConfig(), $userGroupsService);
+        $request = $this->app->make('request');
+
+        if ($this->app[Cacher::class] instanceof FileCacher) {
+            $cacher = new SuperFileCacher(new Writer, $cache, $config, $request, $cacheExclusionChecker);
+        } else {
+            $cacher = new SuperApplicationCacher($cache, $config, $request, $cacheExclusionChecker);
         }
 
-        $cache = app(Repository::class);
-        $config = $this->getStaticCachingConfig();
-        $cacheExclusionChecker = new CacheExclusionChecker($this->getConfig(), app(UserGroupsService::class));
-        $cacher = new AdvancedFileCacher(new Writer, $cache, $config, $cacheExclusionChecker);
-
         $this->app->extend(Cacher::class, function () use ($cacher) {
-            $cacher->setUser(User::getCurrent());
             return $cacher;
         });
     }

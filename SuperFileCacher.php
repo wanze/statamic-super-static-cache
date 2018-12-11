@@ -3,14 +3,14 @@
 namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Contracts\Cache\Repository;
-use Statamic\Contracts\Data\Users\User;
+use Illuminate\Http\Request;
 use Statamic\StaticCaching\FileCacher;
 use Statamic\StaticCaching\Writer;
 
 /**
- * Extend Statamic's FileCacher to prevent caching for authenticated users.
+ * Extends Statamic's FileCacher with more options to prevent static caching.
  */
-class AdvancedFileCacher extends FileCacher
+class SuperFileCacher extends FileCacher
 {
     /**
      * @var CacheExclusionChecker
@@ -18,36 +18,29 @@ class AdvancedFileCacher extends FileCacher
     private $cacheExclusionChecker;
 
     /**
-     * The authenticated user or null if anonymous.
-     *
-     * @var User|null
+     * @var Request
      */
-    private $user;
+    private $request;
 
     /**
      * @param Writer $writer
      * @param Repository $cache
      * @param array $config
+     * @param Request $request
      * @param CacheExclusionChecker $cacheExclusionChecker
      */
     public function __construct(
         Writer $writer,
         Repository $cache,
         array $config,
+        Request $request,
         CacheExclusionChecker $cacheExclusionChecker
     )
     {
         parent::__construct($writer, $cache, $config);
 
         $this->cacheExclusionChecker = $cacheExclusionChecker;
-    }
-
-    /**
-     * @param User|null $user
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
+        $this->request = $request;
     }
 
     /**
@@ -59,11 +52,6 @@ class AdvancedFileCacher extends FileCacher
             return true;
         }
 
-        // Do not exclude for anonymous users.
-        if (!$this->user) {
-            return false;
-        }
-
-        return $this->cacheExclusionChecker->isExcluded($this->user);
+        return $this->cacheExclusionChecker->isExcluded($this->request);
     }
 }

@@ -1,3 +1,5 @@
-cookie_name: statamic_static_cache_skip
-user_roles: []
-user_groups: []
+cache_disabled_authenticated: true
+cache_disabled_cookie_name: statamic_static_cache_skip
+cache_disabled_user_roles: []
+cache_disabled_user_groups: []
+whitelisted_query_strings:

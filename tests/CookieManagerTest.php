@@ -17,17 +17,17 @@ class CookieManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::create
      */
-    public function testCreate_UserExcludedFromCache_CookieGetsCreated()
+    public function test_cookie_gets_created_if_user_is_excluded_from_cache()
     {
         $cookieManager = $this->cookieManager(function (&$config, $cacheExclusionChecker, $cookieJar) {
            $cacheExclusionChecker
-               ->method('isExcluded')
+               ->method('isExcludedForUser')
                ->willReturn(true);
 
            $cookieJar
                ->expects($this->once())
                ->method('make')
-               ->with($config['cookie_name'], 1);
+               ->with($config['cache_disabled_cookie_name'], 1);
         });
 
         $user = $this->getMockBuilder(User::class)->getMock();
@@ -38,17 +38,16 @@ class CookieManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::create
      */
-    public function testCreate_UserNotExcludedFromCache_CookieDoesNotGetCreated()
+    public function test_cookie_does_not_get_created_if_user_is_not_excluded_from_cache()
     {
         $cookieManager = $this->cookieManager(function (&$config, $cacheExclusionChecker, $cookieJar) {
             $cacheExclusionChecker
-                ->method('isExcluded')
+                ->method('isExcludedForUser')
                 ->willReturn(false);
 
             $cookieJar
                 ->expects($this->never())
-                ->method('make')
-                ->with($config['cookie_name'], 1);
+                ->method('make');
         });
 
         $user = $this->getMockBuilder(User::class)->getMock();
@@ -59,24 +58,19 @@ class CookieManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::delete
      */
-    public function testDelete_CookieGetsDeleted()
+    public function test_cookie_deletion()
     {
         $cookieManager = $this->cookieManager(function (&$config, $cacheExclusionChecker, $cookieJar) {
             $cookieJar
                 ->expects($this->once())
                 ->method('forget')
-                ->with($config['cookie_name']);
+                ->with($config['cache_disabled_cookie_name']);
         });
 
         $cookieManager->delete();
     }
 
     /**
-     * Get an instance of the cookie manager with mocked dependencies.
-     *
-     * Optionally use a closure to manipulate any mocked dependencies,
-     * e.g. settings expectations.
-     *
      * @param \Closure $dependencyManipulator
      *   A closure receiving the mocked dependencies.
      *
@@ -85,9 +79,11 @@ class CookieManagerTest extends \PHPUnit_Framework_TestCase
     private function cookieManager($dependencyManipulator)
     {
         $config = [
-            'cookie_name' => 'statamic_static_cache_skip',
-            'user_groups' => [],
-            'user_roles' => [],
+            'cache_disabled_authenticated' => true,
+            'cache_disabled_cookie_name' => 'statamic_static_cache_skip',
+            'cache_disabled_user_roles' => [],
+            'cache_disabled_user_groups' => [],
+            'whitelisted_query_strings' => [],
         ];
 
         $cacheExclusionChecker = $this->getMockBuilder(CacheExclusionChecker::class)

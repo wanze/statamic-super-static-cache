@@ -1,10 +1,40 @@
 fields:
-  cookie_name:
+  cache_disabled_authenticated:
+    display: Disable static caching for authenticated users
+    type: toggle
+    instructions: Check to disable static caching for authenticated users. You may also disable for specific user roles or groups only.
+  cache_disabled_user_roles:
+    display: User roles
+    type: list
+    instructions: Enter role slugs to disable the cache only for users having a role defined here.
+    show_when:
+      cache_disabled_authenticated: true
+  cache_disabled_user_groups:
+    display: User groups
+    type: list
+    instructions: Enter group slugs to disable the cache only for users belonging to a group defined here.
+    show_when:
+      cache_disabled_authenticated: true
+  cache_disabled_cookie_name:
+    display: Cookie name
     type: text
-    instructions: Cookie used to skip static file cache from the reverse proxy for authenticated users.
-  user_roles:
-    type: list
-    instructions: Skip static file cache only for some user roles.
-  user_groups:
-    type: list
-    instructions: Skip static file cache only for some user groups.
+    instructions: Cookie used to skip static file cache from the reverse proxy.
+    show_when:
+      cache_disabled_authenticated: true
+  whitelisted_query_strings:
+    display: Whitelisted query strings
+    type: yaml
+    instructions: |
+      Restrict the static cache to only cache whitelisted query strings per path. The value of each query string is
+      validated against a regex pattern.
+
+      **Examples:**
+      ```
+      /products:
+        page: [0-9]+
+      /categories*
+        sort: ^(desc|asc)$
+      ```
+
+      1. Cache the `page` query string on the `/products` page, but only if it contains at least one number
+      2. Cache the `sort` query string of any page under `/categories`, but only if it contains `desc` or `asc`

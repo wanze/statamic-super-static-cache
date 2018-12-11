@@ -44,11 +44,11 @@ class CookieManager
      */
     public function create(User $user)
     {
-        if (!$this->cacheExclusionChecker->isExcluded($user)){
+        if (!$this->cacheExclusionChecker->isExcludedForUser($user)){
             return;
         }
 
-        $cookie = $this->cookieJar->make($this->config->get('cookie_name'), 1);
+        $cookie = $this->cookieJar->make($this->config->get('cache_disabled_cookie_name'), 1);
         $this->cookieJar->queue($cookie);
     }
 
@@ -57,7 +57,7 @@ class CookieManager
      */
     public function delete()
     {
-        $cookie = $this->cookieJar->forget($this->config->get('cookie_name'));
+        $cookie = $this->cookieJar->forget($this->config->get('cache_disabled_cookie_name'));
         $this->cookieJar->queue($cookie);
     }
 }
