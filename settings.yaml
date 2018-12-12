@@ -31,9 +31,9 @@ fields:
       **Examples:**
       ```
       /products:
-        page: [0-9]+
-      /categories*
-        sort: ^(desc|asc)$
+        page: '[0-9]+'
+      /categories*:
+        sort: '^(desc|asc)$'
       ```
 
       1. Cache the `page` query string on the `/products` page, but only if it contains at least one number

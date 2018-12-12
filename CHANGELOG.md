@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## v1.1.1 - 2018-12-12
+
+**Fixed**
+
+* Fix missing array initialisation for `whitelisted_query_strings` setting ([#2](https://github.com/wanze/SuperStaticCache/issues/2))
+
 ## v1.1.0 - 2018-12-11
 
 **Added**

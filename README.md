@@ -33,15 +33,15 @@ The value of each query string is validated against a regex pattern.
 
 ```yaml
 /products:
-  page: [0-9]+
+  page: '[0-9]+'
 ```
 
 Cache the `page` query string on the `/products` page, but only if it contains at least one number.
 
 ```yaml
-/categories*
-  page: [0-9]+
-  sort: ^(desc|asc)$
+/categories*:
+  page: '[0-9]+'
+  sort: '^(desc|asc)$'
 ```
 
 Cache the `page` and `sort` query string of any page under `/categories` (using `*` as wildcard). Only create a cache
