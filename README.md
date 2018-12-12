@@ -8,11 +8,10 @@ users.
 
 ## Features
 
-* Do you generate different markup for anonymous and authenticated users and want to make sure that a page gets cached by 
-anonymous users only? With this Addon you may disable the static cache for authenticated users, optionally restricted 
+* Need to serve different markup for anonymous and authenticated users and want to make sure that a page gets cached by 
+anonymous users only? Disable the static cache for authenticated users, optionally restricted 
 to user roles or groups. Or in other words, enable static caching for anonymous users only.
-* Increase security when caching query strings (`static_caching_ignore_query_strings=false`) by whitelisting allowed
-query strings per path.
+* Only cache whitelisted query strings per path (when using `static_caching_ignore_query_strings=false`).  
 
 ## Installation
 
