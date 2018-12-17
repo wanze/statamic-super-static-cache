@@ -17,7 +17,7 @@ install:
     - cd ../
 
     # Symlink addon to site/addons
-    - ln -s $TRAVIS_BUILD_DIR site/addons
+    - ln -s $TRAVIS_BUILD_DIR site/addons/SuperStaticCache
 
 script:
     - php please test:addons
