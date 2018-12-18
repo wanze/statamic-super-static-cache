@@ -1,9 +1,9 @@
 # Super Static Cache
 
-[![Build Status](https://travis-ci.org/wanze/SuperStaticCache.svg?branch=master)](https://travis-ci.org/wanze/SuperStaticCache)
+[![Build Status](https://travis-ci.org/wanze/statamic-super-static-cache.svg?branch=master)](https://travis-ci.org/wanze/statamic-super-static-cache)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Statamic Addon extending the static cache with additional features such as disabling caching for authenticated
+Statamic addon extending the static cache with additional features such as disabling caching for authenticated
 users.
 
 ## Features
@@ -15,7 +15,7 @@ to user roles or groups. Or in other words, enable static caching for anonymous 
 
 ## Installation
 
-1. Clone this repository or download and unpack the zip file
+1. Download the addon and rename the folder to `SuperStaticCache`
 2. Move the `SuperStaticCache` folder to `site/addons`
 
 ## Configuration
@@ -36,7 +36,7 @@ The value of each query string is validated against a regex pattern.
   page: '[0-9]+'
 ```
 
-Cache the `page` query string on the `/products` page, but only if it contains at least one number.
+Cache the `page` query string on the `/products` page, but only if it contains numbers.
 
 ```yaml
 /categories*:
@@ -45,13 +45,13 @@ Cache the `page` query string on the `/products` page, but only if it contains a
 ```
 
 Cache the `page` and `sort` query string of any page under `/categories` (using `*` as wildcard). Only create a cache
-file if `page` contains at least one number and `sort` is equal to `desc` or `asc`.
+file if `page` contains numbers and `sort` is equal to `desc` or `asc`.
 
 Lastly, we need to adjust some configuration based on the active static caching type. 
 
 ### Full Measure
 
-This strategy serves a cached file directly from the reverse proxy. We need to adjust the configuration of the reverse 
+This strategy serves a cached file directly from the reverse proxy. Extend the configuration of the reverse 
 proxy to skip the cache if the "skip cache" cookie is present.
 
 **Apache**
@@ -64,17 +64,18 @@ Add the following rewrite condition in your `.htaccess` below the _Static Cachin
 
 **Nginx**
 
-ℹ️ TODO! If you know how to configure Nginx, please let me know or send a pull request. Thanks :)
+🛠 If you know how to configure Nginx, please let me know or send a pull request. Thanks! :)
 
 **IIS**
 
-ℹ️ TODO! If you know how to configure IIS, please let me know or send a pull request. Thanks :)
+🛠️ If you know how to configure IIS, please let me know or send a pull request. Thanks! :)
 
 ### Half Measure 
 
 No additional configuration necessary.
 
-⚠️ **Attention!** There is currently an issue that an authenticated user gets a cached page, if available.
-This is due to the fact that the authenticated user is not yet available when the `\Statamic\StaticCaching\Middleware\Retrieve` 
-middleware gets executed, returning the cached response. We fail to check if the current user is anonymous or authenticated
-at this point in the request lifecycle. If you know how to solve this problem, please let me know!
+⚠️ **Attention!** There is currently an issue with this caching type that authenticated users receive cached pages.
+Reason is that the authenticated user is not yet available when the `\Statamic\StaticCaching\Middleware\Retrieve` 
+middleware gets executed, returning a cached response. The addon fails to check if the current user is anonymous or 
+authenticated at this point in the request lifecycle. This is not a problem if you use the _Full Measure_ strategy.
+If you know how to solve this problem, please let me know!
