@@ -3,15 +3,12 @@
 [![Build Status](https://travis-ci.org/wanze/statamic-super-static-cache.svg?branch=master)](https://travis-ci.org/wanze/statamic-super-static-cache)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Statamic addon extending the static cache with additional features such as disabling caching for authenticated
-users.
-
 ## Features
 
-* Need to serve different markup for anonymous and authenticated users and want to make sure that a page gets cached by 
-anonymous users only? Disable the static cache for authenticated users, optionally restricted 
-to user roles or groups. Or in other words, enable static caching for anonymous users only.
-* Only cache whitelisted query strings per path (when using `static_caching_ignore_query_strings=false`).  
+* Allows to disable static caching for authenticated users. This is important if you serve different markup for anonymous
+and authenticated users.
+* Enhanced security: Restrict the static cache to only cache whitelisted query strings per path (when using `static_caching_ignore_query_strings=false`).  
+* Provides the command `super_static_cache:warmup` to pre-generate the static cache via command line.
 
 ## Installation
 
@@ -20,15 +17,16 @@ to user roles or groups. Or in other words, enable static caching for anonymous 
 
 ## Configuration
 
-Super Static Cache offers the following settings:
-
-* **`Disable static caching for authenticated users`** Check to disable static caching for authenticated users
-* **`User roles`** Enter role slugs to disable the cache only for users having a role defined here
-* **`User groups`** Enter group slugs to disable the cache only for users belonging to a group defined here
-* **`Cookie name`** Cookie used to skip static file cache from the reverse proxy 
+* **`Disable static caching for authenticated users`** Check to disable static caching for authenticated users.
+* **`User roles`** Enter role slugs to disable the cache only for users having a role defined here.
+* **`User groups`** Enter group slugs to disable the cache only for users belonging to a group defined here.
+* **`Cookie name`** Cookie used to skip static file cache from the reverse proxy.
 * **`Whitelisted query strings`** Restrict the static cache to only cache whitelisted query strings per path. 
 The value of each query string is validated against a regex pattern.
- 
+* **`Warmup collections`** Warmup the static cache for the defined collections.
+* **`Warmup taxonomies`** Warmup the static cache for the defined taxonomies.
+* **`Warmup request timeout`** Timeout of the requests in seconds. Use `0` to wait indefinitely.
+
 **Whitelisted query strings examples**
 
 ```yaml
@@ -47,12 +45,10 @@ Cache the `page` query string on the `/products` page, but only if it contains n
 Cache the `page` and `sort` query string of any page under `/categories` (using `*` as wildcard). Only create a cache
 file if `page` contains numbers and `sort` is equal to `desc` or `asc`.
 
-Lastly, we need to adjust some configuration based on the active static caching type. 
+### Configure the [Full Measure](https://docs.statamic.com/caching#full-measure) strategy
 
-### Full Measure
-
-This strategy serves a cached file directly from the reverse proxy. Extend the configuration of the reverse 
-proxy to skip the cache if the "skip cache" cookie is present.
+This strategy serves a cached file directly from the reverse proxy. We need to extend the configuration of the reverse 
+proxy to skip the redirect if the "skip cache" cookie is present.
 
 **Apache**
 
@@ -60,22 +56,27 @@ Add the following rewrite condition in your `.htaccess` below the _Static Cachin
 
 ```RewriteCond %{HTTP_COOKIE} !^.*statamic_static_cache_skip.*$```
 
-> Replace `statamic_static_cache_skip` with the name of your cookie.
+> Replace `statamic_static_cache_skip` with the name of your cookie defined in the addon configuration.
 
 **Nginx**
 
-🛠 If you know how to configure Nginx, please let me know or send a pull request. Thanks! :)
+🛠 If you know how to configure Nginx, please let me know or send a pull request.
 
 **IIS**
 
-🛠️ If you know how to configure IIS, please let me know or send a pull request. Thanks! :)
+🛠️ If you know how to configure IIS, please let me know or send a pull request.
 
-### Half Measure 
+### Configure the [Half Measure](https://docs.statamic.com/caching#half-measure) strategy 
 
 No additional configuration necessary.
 
-⚠️ **Attention!** There is currently an issue with this caching type that authenticated users receive cached pages.
-Reason is that the authenticated user is not yet available when the `\Statamic\StaticCaching\Middleware\Retrieve` 
+⚠️ **Attention!** There is currently an issue with this strategy that authenticated users receive cached pages:
+The authenticated user is not yet available when the `\Statamic\StaticCaching\Middleware\Retrieve` 
 middleware gets executed, returning a cached response. The addon fails to check if the current user is anonymous or 
 authenticated at this point in the request lifecycle. This is not a problem if you use the _Full Measure_ strategy.
-If you know how to solve this problem, please let me know!
+
+## Warmup the static cache
+
+The addon provides a handy command `super_static_cache:warmup` to pre-generate the static cache from the command line.
+By default, the command creates the cache for all pages. Make sure to specify which collections and taxonomies should
+get "warmed up" in the addon's configuration!
