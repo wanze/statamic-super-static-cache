@@ -20,4 +20,4 @@ install:
     - ln -s $TRAVIS_BUILD_DIR site/addons/SuperStaticCache
 
 script:
-    - php please test:addons
+    - statamic/vendor/bin/phpunit --group super_static_cache

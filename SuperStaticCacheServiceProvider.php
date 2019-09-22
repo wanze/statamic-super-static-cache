@@ -19,6 +19,10 @@ class SuperStaticCacheServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->extendCacherService();
+
+        $this->app->singleton(WarmupCacheClient::class, function() {
+            return new WarmupCacheClient($this->getConfig());
+        });
     }
 
     private function extendCacherService()

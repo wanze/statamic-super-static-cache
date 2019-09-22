@@ -18,7 +18,7 @@ fields:
   cache_disabled_cookie_name:
     display: Cookie name
     type: text
-    instructions: Cookie used to skip static file cache from the reverse proxy.
+    instructions: Cookie used to skip the static file cache from the reverse proxy.
     show_when:
       cache_disabled_authenticated: true
   whitelisted_query_strings:
@@ -38,3 +38,20 @@ fields:
 
       1. Cache the `page` query string on the `/products` page, but only if it contains at least one number
       2. Cache the `sort` query string of any page under `/categories`, but only if it contains `desc` or `asc`
+  section_warmup:
+    type: section
+    instructions: |
+      These settings apply when warming up the static cache via the `super_static_cache:warmup` command.
+    display: Warmup
+  warmup_collections:
+    display: Collections
+    type: list
+    instructions: The static cache is only generated for the collections specified here. Enter collection names.
+  warmup_taxonomies:
+    display: Taxonomies
+    type: list
+    instructions: The static cache is only generated for taxonomies specified here. Enter taxonomy names.
+  warmup_request_timeout:
+    display: Request timeout
+    type: text
+    instructions: 'Timeout of the requests in seconds. Use `0` to wait indefinitely.'

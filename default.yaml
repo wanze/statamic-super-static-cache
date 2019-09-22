@@ -3,3 +3,6 @@ cache_disabled_cookie_name: statamic_static_cache_skip
 cache_disabled_user_roles: []
 cache_disabled_user_groups: []
 whitelisted_query_strings: []
+warmup_collections: []
+warmup_taxonomies: []
+warmup_request_timeout: 0
