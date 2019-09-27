@@ -117,25 +117,39 @@ class CacheExclusionChecker
 
         $requestQueryStrings = collect($request->query->all());
 
+        // If the request does not have any query strings, we do not need to check against the whitelist.
         if (!$requestQueryStrings->count()) {
             return false;
         }
 
         foreach ($whitelistedQueryStrings as $path => $queryStrings) {
+            // 1) Continue if the path does not match.
             if (!$this->matchesPath($request, $path)) {
                 continue;
             }
 
-            // Validate each query string against the regex pattern.
-            foreach ($queryStrings as $param => $regex) {
-                if (!$requestQueryStrings->has($param)) {
-                    continue;
-                }
+            // 2) Make sure that all request query params are whitelisted.
+            $whitelistedParams = collect($queryStrings)->keys();
+            $diff = $requestQueryStrings->keys()->diff($whitelistedParams);
 
-                $pattern = sprintf('/%s/', $regex);
-                if (!preg_match($pattern, $requestQueryStrings->get($param))) {
-                    return true;
+            if ($diff->count()) {
+                return true;
+            }
+
+            // 3) Validate each request query param against the defined regex pattern.
+            $failedParams = collect($queryStrings)->map(function ($regex, $param) use ($requestQueryStrings) {
+                if (!$requestQueryStrings->has($param)) {
+                    return false;
                 }
+                $pattern = sprintf('/%s/', $regex);
+                if (preg_match($pattern, $requestQueryStrings->get($param))) {
+                    return false;
+                }
+                return true;
+            })->filter();
+
+            if ($failedParams->count()) {
+                return true;
             }
         }
 

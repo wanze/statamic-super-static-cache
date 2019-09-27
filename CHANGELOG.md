@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2019-09-28
+
+### Fixed
+
+* Fix whitelisted query strings not working correctly in combination with paths using `*` as wildcard
+
 ## [1.2.0] - 2019-09-22
 
 ### Added
@@ -32,8 +38,9 @@
 
 Initial release of the addon 🐣
 
-[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.2.1...HEAD
 [1.0.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.0.0
 [1.1.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.0
 [1.1.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.1
 [1.2.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.0
+[1.2.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.1

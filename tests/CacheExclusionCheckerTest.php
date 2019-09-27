@@ -164,11 +164,17 @@ class CacheExclusionCheckerTest extends \PHPUnit_Framework_TestCase
                 ['/foo' => ['page' => '[0-9]+']],
                 ['page' => '1', 'name' => 'John Doe'],
                 '/foo',
-                false,
+                true,
             ],
             [
                 ['/foo' => ['page' => '[0-9]+']],
                 ['page' => 'not a number'],
+                '/foo',
+                true,
+            ],
+            [
+                ['/foo' => ['page' => '[0-9]+']],
+                ['some_random_param' => 'bar'],
                 '/foo',
                 true,
             ],
@@ -195,6 +201,26 @@ class CacheExclusionCheckerTest extends \PHPUnit_Framework_TestCase
                 ['page' => 'not a number'],
                 '/foo/bar/x/y/z',
                 true,
+            ],
+            // This one is tricky, as both paths match the request. Here's what should happen:
+            // "/foo" is valid, but "/*" fails because the "page" param is not whitelisted!
+            [
+                [
+                    '/foo' => ['page' => '[0-9]+'],
+                    '/*' => ['form_submitted' => '^1$'],
+                ],
+                ['page' => '1'],
+                '/foo',
+                true,
+            ],
+            [
+                [
+                    '/foo' => ['page' => '[0-9]+'],
+                    '/*' => ['page' => '[0-9]+', 'form_submitted' => '^1$'],
+                ],
+                ['page' => '2'],
+                '/foo',
+                false,
             ],
         ];
     }
