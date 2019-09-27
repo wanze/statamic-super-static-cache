@@ -1,14 +1,15 @@
 # Super Static Cache
 
 [![Build Status](https://travis-ci.org/wanze/statamic-super-static-cache.svg?branch=master)](https://travis-ci.org/wanze/statamic-super-static-cache)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Statamic 2](https://img.shields.io/badge/Statamic-2-orange.svg)](https://statamic.com)
 
 ## Features
 
 * Allows to disable static caching for authenticated users. This is important if you serve different markup for anonymous
 and authenticated users.
 * Enhanced security: Restrict the static cache to only cache whitelisted query strings per path (when using `static_caching_ignore_query_strings=false`).  
-* Provides the command `super_static_cache:warmup` to pre-generate the static cache via command line.
+* Generate the static cache via command line by using the provided `super_static_cache:warmup` command.
 
 ## Installation
 
@@ -23,8 +24,8 @@ and authenticated users.
 * **`Cookie name`** Cookie used to skip static file cache from the reverse proxy.
 * **`Whitelisted query strings`** Restrict the static cache to only cache whitelisted query strings per path. 
 The value of each query string is validated against a regex pattern.
-* **`Warmup collections`** Warmup the static cache for the defined collections.
-* **`Warmup taxonomies`** Warmup the static cache for the defined taxonomies.
+* **`Warmup collections`** Warmup the static cache for the selected collections.
+* **`Warmup taxonomies`** Warmup the static cache for the selected taxonomies.
 * **`Warmup request timeout`** Timeout of the requests in seconds. Use `0` to wait indefinitely.
 
 **Whitelisted query strings examples**
@@ -79,4 +80,4 @@ authenticated at this point in the request lifecycle. This is not a problem if y
 
 The addon provides a handy command `super_static_cache:warmup` to pre-generate the static cache from the command line.
 By default, the command creates the cache for all pages. Make sure to specify which collections and taxonomies should
-get "warmed up" in the addon's configuration!
+get "warmed up" additionally in the addon's configuration.
