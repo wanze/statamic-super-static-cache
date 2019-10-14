@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2019-10-14
+
+### Added
+
+* Easier debugging: Flag pages served by the static cache with a customizable comment string in the source code ([#4](https://github.com/wanze/SuperStaticCache/issues/4))
+
 ## [1.2.1] - 2019-09-28
 
 ### Fixed
@@ -44,3 +50,4 @@ Initial release of the addon 🐣
 [1.1.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.1
 [1.2.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.0
 [1.2.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.1
+[1.3.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.3.0

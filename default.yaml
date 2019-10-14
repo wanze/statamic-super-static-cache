@@ -6,3 +6,5 @@ whitelisted_query_strings: []
 warmup_collections: []
 warmup_taxonomies: []
 warmup_request_timeout: 0
+debug_enabled: false
+debug_string: <!-- Served by static cache -->

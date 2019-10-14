@@ -10,6 +10,7 @@
 and authenticated users.
 * Enhanced security: Restrict the static cache to only cache whitelisted query strings per path (when using `static_caching_ignore_query_strings=false`).  
 * Generate the static cache via command line by using the provided `super_static_cache:warmup` command.
+* Easier debugging: Flag pages served by the static cache with a customizable comment string in the source code. Default: `<!-- Served by static cache -->`.
 
 ## Installation
 
@@ -19,14 +20,16 @@ and authenticated users.
 ## Configuration
 
 * **`Disable static caching for authenticated users`** Check to disable static caching for authenticated users.
-* **`User roles`** Enter role slugs to disable the cache only for users having a role defined here.
-* **`User groups`** Enter group slugs to disable the cache only for users belonging to a group defined here.
-* **`Cookie name`** Cookie used to skip static file cache from the reverse proxy.
+  * **`User roles`** Enter role slugs to disable the cache only for users having a role defined here.
+  * **`User groups`** Enter group slugs to disable the cache only for users belonging to a group defined here.
+  * **`Cookie name`** Cookie used to skip static file cache from the reverse proxy.
 * **`Whitelisted query strings`** Restrict the static cache to only cache whitelisted query strings per path. 
 The value of each query string is validated against a regex pattern.
 * **`Warmup collections`** Warmup the static cache for the selected collections.
 * **`Warmup taxonomies`** Warmup the static cache for the selected taxonomies.
 * **`Warmup request timeout`** Timeout of the requests in seconds. Use `0` to wait indefinitely.
+* **`Enable debugging`** Check to enable debugging.
+* **`Debug string`** This string gets prepended to the source code of cached responses, allowing you to easily identify pages served by the static cache. 
 
 **Whitelisted query strings examples**
 
@@ -38,7 +41,7 @@ The value of each query string is validated against a regex pattern.
 Cache the `page` query string on the `/products` page, but only if it contains numbers.
 
 ```yaml
-/categories*:
+'/categories*':
   page: '[0-9]+'
   sort: '^(desc|asc)$'
 ```
@@ -46,10 +49,10 @@ Cache the `page` query string on the `/products` page, but only if it contains n
 Cache the `page` and `sort` query string of any page under `/categories` (using `*` as wildcard). Only create a cache
 file if `page` contains numbers and `sort` is equal to `desc` or `asc`.
 
-### Configure the [Full Measure](https://docs.statamic.com/caching#full-measure) strategy
+### Configuration for the [Full Measure](https://docs.statamic.com/caching#full-measure) strategy
 
 This strategy serves a cached file directly from the reverse proxy. We need to extend the configuration of the reverse 
-proxy to skip the redirect if the "skip cache" cookie is present.
+proxy to skip the redirect if the user is logged in and the "skip cache" cookie is present.
 
 **Apache**
 
@@ -67,7 +70,7 @@ Add the following rewrite condition in your `.htaccess` below the _Static Cachin
 
 🛠️ If you know how to configure IIS, please let me know or send a pull request.
 
-### Configure the [Half Measure](https://docs.statamic.com/caching#half-measure) strategy 
+### Configuration for the [Half Measure](https://docs.statamic.com/caching#half-measure) strategy 
 
 No additional configuration necessary.
 
@@ -79,5 +82,5 @@ authenticated at this point in the request lifecycle. This is not a problem if y
 ## Warmup the static cache
 
 The addon provides a handy command `super_static_cache:warmup` to pre-generate the static cache from the command line.
-By default, the command creates the cache for all pages. Make sure to specify which collections and taxonomies should
-get "warmed up" additionally in the addon's configuration.
+By default, the command creates the cache for all pages for each locale. Make sure to specify which collections and
+taxonomies should get "warmed up" additionally in the addon's configuration.

@@ -4,6 +4,7 @@ namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Request;
+use Statamic\Extend\Extensible;
 use Statamic\StaticCaching\FileCacher;
 use Statamic\StaticCaching\Writer;
 
@@ -12,6 +13,9 @@ use Statamic\StaticCaching\Writer;
  */
 class SuperFileCacher extends FileCacher
 {
+    use Extensible;
+    use DebugTrait;
+
     /**
      * @var CacheExclusionChecker
      */
@@ -53,5 +57,12 @@ class SuperFileCacher extends FileCacher
         }
 
         return $this->cacheExclusionChecker->isExcluded($this->request);
+    }
+
+    protected function normalizeContent($content)
+    {
+        $content = parent::normalizeContent($content);
+
+        return $this->prependDebugString($content);
     }
 }

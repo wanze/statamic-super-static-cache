@@ -55,3 +55,15 @@ fields:
     display: Request timeout
     type: text
     instructions: 'Timeout of the requests in seconds. Use `0` to wait indefinitely.'
+  section_debug:
+    type: section
+    display: Debugging
+  debug_enabled:
+    type: toggle
+    display: Enable debugging
+  debug_string:
+    type: text
+    display: Debug string
+    instructions: 'This string gets prepended to the source code of cached responses, allowing you to easily identify pages served by the static cache.'
+    show_when:
+      debug_enabled: true

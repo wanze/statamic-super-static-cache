@@ -1,6 +1,6 @@
 name: 'Super Static Cache'
-version: '1.2.1'
-description: 'Extends the static cache with additional features such as disabling caching for authenticated users.'
+version: '1.3.0'
+description: 'Extends the static cache with additional features such as disabling caching for authenticated users, enhanced security and easier debugging.'
 url: 'https://statamic.com/marketplace/addons/super-static-cache'
 developer: 'Stefan Wanzenried'
 developer_url: 'https://github.com/wanze'

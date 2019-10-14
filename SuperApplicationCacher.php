@@ -4,6 +4,7 @@ namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Request;
+use Statamic\Extend\Extensible;
 use Statamic\StaticCaching\ApplicationCacher;
 
 /**
@@ -15,6 +16,9 @@ use Statamic\StaticCaching\ApplicationCacher;
  */
 class SuperApplicationCacher extends ApplicationCacher
 {
+    use Extensible;
+    use DebugTrait;
+
     /**
      * @var CacheExclusionChecker
      */
@@ -61,5 +65,12 @@ class SuperApplicationCacher extends ApplicationCacher
         }
 
         return parent::getCachedPage($request);
+    }
+
+    protected function normalizeContent($content)
+    {
+        $content = parent::normalizeContent($content);
+
+        return $this->prependDebugString($content);
     }
 }
