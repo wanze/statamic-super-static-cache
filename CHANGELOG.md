@@ -44,7 +44,7 @@
 
 Initial release of the addon 🐣
 
-[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.3.0...HEAD
 [1.0.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.0.0
 [1.1.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.0
 [1.1.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.1
