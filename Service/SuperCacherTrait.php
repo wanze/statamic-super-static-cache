@@ -1,8 +1,8 @@
 <?php
 
-namespace Statamic\Addons\SuperStaticCache;
+namespace Statamic\Addons\SuperStaticCache\Service;
 
-trait DebugTrait
+trait SuperCacherTrait
 {
     private function prependDebugString($content)
     {

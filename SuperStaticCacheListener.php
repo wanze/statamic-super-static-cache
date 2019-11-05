@@ -2,6 +2,8 @@
 
 namespace Statamic\Addons\SuperStaticCache;
 
+use Statamic\Addons\SuperStaticCache\Service\CacheExclusionChecker;
+use Statamic\Addons\SuperStaticCache\Service\CookieManager;
 use Statamic\Contracts\Data\Users\User;
 use Statamic\Data\Services\UserGroupsService;
 use Statamic\Extend\Listener;

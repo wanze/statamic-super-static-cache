@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\SuperStaticCache;
+namespace Statamic\Addons\SuperStaticCache\Service;
 
 use Illuminate\Http\Request;
 use Statamic\API\Role;

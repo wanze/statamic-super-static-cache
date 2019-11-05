@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\SuperStaticCache;
+namespace Statamic\Addons\SuperStaticCache\Service;
 
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ use Statamic\StaticCaching\Writer;
 class SuperFileCacher extends FileCacher
 {
     use Extensible;
-    use DebugTrait;
+    use SuperCacherTrait;
 
     /**
      * @var CacheExclusionChecker

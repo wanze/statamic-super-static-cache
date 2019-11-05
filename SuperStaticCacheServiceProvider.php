@@ -2,6 +2,10 @@
 
 namespace Statamic\Addons\SuperStaticCache;
 
+use Statamic\Addons\SuperStaticCache\Service\CacheExclusionChecker;
+use Statamic\Addons\SuperStaticCache\Service\SuperApplicationCacher;
+use Statamic\Addons\SuperStaticCache\Service\SuperFileCacher;
+use Statamic\Addons\SuperStaticCache\Service\WarmupCacheClient;
 use Statamic\Data\Services\UserGroupsService;
 use Statamic\Extend\ServiceProvider;
 use Statamic\StaticCaching\FileCacher;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\SuperStaticCache;
+namespace Statamic\Addons\SuperStaticCache\Service;
 
 use Illuminate\Cookie\CookieJar;
 use Statamic\Contracts\Data\Users\User;
