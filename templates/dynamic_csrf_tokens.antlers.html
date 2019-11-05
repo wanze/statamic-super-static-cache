@@ -1,0 +1,24 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const $tokenInputs = [...document.querySelectorAll(`{{ form_selector }} input[name="_token"]`)];
+
+        if ($tokenInputs.length === 0) {
+            return;
+        }
+
+        fetch('/!/SuperStaticCache/token', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Statamic-Addon': 'SuperStaticCache',
+            },
+        })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(data) {
+                $tokenInputs.forEach(($field) => {
+                    $field.value = data.token;
+                });
+            });
+    });
+</script>
