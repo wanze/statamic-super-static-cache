@@ -3,6 +3,7 @@
 namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Cookie\CookieJar;
+use Statamic\Addons\SuperStaticCache\Service\CacheExclusionChecker;
 use Statamic\Addons\SuperStaticCache\Service\CookieManager;
 use Statamic\Contracts\Data\Users\User;
 
