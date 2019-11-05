@@ -3,12 +3,13 @@
 namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Cookie\CookieJar;
+use Statamic\Addons\SuperStaticCache\Service\CookieManager;
 use Statamic\Contracts\Data\Users\User;
 
 /**
  * Unit tests for the CookieManager class.
  *
- * @coversDefaultClass \Statamic\Addons\SuperStaticCache\CookieManager
+ * @coversDefaultClass \Statamic\Addons\SuperStaticCache\Service\CookieManager
  *
  * @group super_static_cache
  */

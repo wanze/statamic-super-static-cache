@@ -4,6 +4,7 @@ namespace Statamic\Addons\SuperStaticCache;
 
 use Illuminate\Http\Request;
 use PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls as ConsecutiveCalls;
+use Statamic\Addons\SuperStaticCache\Service\CacheExclusionChecker;
 use Statamic\Data\Services\UserGroupsService;
 use Statamic\Data\Users\User;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 /**
  * Unit tests for the CacheExclusionChecker class.
  *
- * @coversDefaultClass \Statamic\Addons\SuperStaticCache\CacheExclusionChecker
+ * @coversDefaultClass \Statamic\Addons\SuperStaticCache\Service\CacheExclusionChecker
  *
  * @group super_static_cache
  */
