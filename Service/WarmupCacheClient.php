@@ -23,11 +23,11 @@ class WarmupCacheClient
     /**
      * @var \Illuminate\Support\Collection
      */
-    private $config;
+    private $addonConfig;
 
-    public function __construct(array $config)
+    public function __construct(array $addonConfig)
     {
-        $this->config = collect($config);
+        $this->addonConfig = collect($addonConfig);
         $this->client = new Client([
             'http_errors' => false,
             'timeout' => $this->getConfigInt('warmup_request_timeout', 0)

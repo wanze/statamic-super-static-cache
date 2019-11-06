@@ -3,7 +3,7 @@
 namespace Statamic\Addons\SuperStaticCache\Commands;
 
 use Illuminate\Support\Facades\Event;
-use Statamic\Addons\SuperStaticCache\WarmupCacheClient;
+use Statamic\Addons\SuperStaticCache\Service\WarmupCacheClient;
 use Statamic\Extend\Command;
 
 /**
@@ -12,7 +12,7 @@ use Statamic\Extend\Command;
 class WarmupCommand extends Command
 {
     /**
-     * @var \Statamic\Addons\SuperStaticCache\WarmupCacheClient
+     * @var WarmupCacheClient
      */
     private $warmupCacheClient;
 
