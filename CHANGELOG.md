@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2019-11-06
+
+### Added
+
+* Add the possibility to use the static cache with forms by injecting CSRF tokens via ajax calls
+
 ## [1.3.0] - 2019-10-14
 
 ### Added
@@ -44,10 +50,11 @@
 
 Initial release of the addon 🐣
 
-[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/wanze/SuperStaticCache/compare/v1.4.0...HEAD
 [1.0.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.0.0
 [1.1.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.0
 [1.1.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.1.1
 [1.2.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.0
 [1.2.1]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.2.1
 [1.3.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.3.0
+[1.4.0]: https://github.com/wanze/SuperStaticCache/releases/tag/v1.4.0
