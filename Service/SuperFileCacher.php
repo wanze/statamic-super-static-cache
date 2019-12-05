@@ -4,6 +4,8 @@ namespace Statamic\Addons\SuperStaticCache\Service;
 
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Request;
+use Statamic\Addons\SuperStaticCache\Event\CacheExclusionEvent;
+use Statamic\API\Path;
 use Statamic\Extend\Extensible;
 use Statamic\StaticCaching\FileCacher;
 use Statamic\StaticCaching\Writer;
@@ -56,7 +58,36 @@ class SuperFileCacher extends FileCacher
             return true;
         }
 
-        return $this->cacheExclusionChecker->isExcluded($this->request);
+        if ($this->cacheExclusionChecker->isExcluded($this->request)) {
+            return true;
+        }
+
+        // Allow business logic to decide whether to exclude or not.
+        $event = new CacheExclusionEvent($url, $this->request);
+        $this->emitEvent('cacheExclusion', $event);
+
+        return $event->isExcluded();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFilePath($url)
+    {
+        if (!$this->getConfigBool('cache_domain_enabled', false)) {
+            return parent::getFilePath($url);
+        }
+
+        $parts = parse_url($url);
+
+        $path = sprintf('%s/%s%s_%s.html',
+            $this->getCachePath(),
+            $this->request->getHost(),
+            $parts['path'],
+            array_get($parts, 'query', '')
+        );
+
+        return Path::makeFull($path);
     }
 
     protected function normalizeContent($content)

@@ -12,6 +12,7 @@ and authenticated users.
 * Generate the static cache via command line by using the provided `super_static_cache:warmup` command.
 * Easier debugging: Flag pages served by the static cache with a customizable comment string in the source code. Default: `<!-- Served by static cache -->`.
 * Use the static cache with forms by injecting CSRF tokens via ajax call.
+* Allow different caches per domain.
 
 ## Installation
 
@@ -71,13 +72,29 @@ Cache the `page` query string on the `/products` page, but only if it contains n
 Cache the `page` and `sort` query string of any page under `/categories` (using `*` as wildcard). Only create a cache
 file if `page` contains numbers and `sort` is equal to `desc` or `asc`.
 
+### Different caches per domain
+
+Enable this feature to store separate caches for each domain. This allows to serve different markup based on the domain.
+If you use the full measure strategy, you need to adjust the rewrite rules.
+
+**Apache**
+
+Include the `%{HTTP_HOST}` variable in the rewrite conditions and rules. The whole block should look like this:
+
+```
+RewriteCond %{DOCUMENT_ROOT}/static_cache/%{HTTP_HOST}%{REQUEST_URI}_%{QUERY_STRING}\.html -s
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{HTTP_COOKIE} !^.*statamic_static_cache_skip.*$
+RewriteRule .* static_cache/%{HTTP_HOST}%{REQUEST_URI}_%{QUERY_STRING}\.html [L,T=text/html]
+``` 
+
 ### Warmup the static cache
 
 The addon provides a handy command `super_static_cache:warmup` to pre-generate the static cache from the command line.
 By default, the command creates the cache for all pages for each locale. Make sure to specify which collections and
 taxonomies should get "warmed up" additionally in the configuration.
 
-### Debug Mode
+### Debug mode
 
 Enable debugging in the configuration to inject a customizable debug string in source code of cached responses (at the very beginning).
 This allows to quickly check if a response has been sent by the static cache.

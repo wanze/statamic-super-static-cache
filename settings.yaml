@@ -41,6 +41,12 @@ fields:
 
       1. Cache the `page` query string on the `/products` page, but only if it contains at least one number
       2. Cache the `sort` query string of any page under `/categories`, but only if it contains `desc` or `asc`
+  cache_domain_enabled:
+    type: toggle
+    display: Create separate cache for each domain
+    instructions: |
+      Enable if the markup of pages is different per domain.
+      Note: If you are using the full mesasure strategy, make sure to adjust the rewrite rules in the reverse proxy according to the docs.
   section_warmup:
     type: section
     instructions: |

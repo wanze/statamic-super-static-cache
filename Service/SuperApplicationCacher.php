@@ -4,6 +4,7 @@ namespace Statamic\Addons\SuperStaticCache\Service;
 
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Http\Request;
+use Statamic\Addons\SuperStaticCache\Event\CacheExclusionEvent;
 use Statamic\Extend\Extensible;
 use Statamic\StaticCaching\ApplicationCacher;
 
@@ -52,19 +53,24 @@ class SuperApplicationCacher extends ApplicationCacher
             return true;
         }
 
-        return $this->cacheExclusionChecker->isExcluded($this->request);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCachedPage(Request $request)
-    {
-        if ($this->cacheExclusionChecker->isExcluded($request)) {
-            return null;
+        if ($this->cacheExclusionChecker->isExcluded($this->request)) {
+            return true;
         }
 
-        return parent::getCachedPage($request);
+        // Allow business logic to decide whether to exclude or not.
+        $event = new CacheExclusionEvent($url, $this->request);
+        $this->emitEvent('cacheExclusion', $event);
+
+        return $event->isExcluded();
+    }
+
+    protected function makeHash($url)
+    {
+        if (!$this->getConfigBool('cache_domain_enabled', false)) {
+            return parent::makeHash($url);
+        }
+
+        return md5($this->request->getHost() . $url);
     }
 
     protected function normalizeContent($content)

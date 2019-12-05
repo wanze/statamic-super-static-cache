@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+* Add the possibility to create separate caches per domain
+* Emit a new event `SuperStaticCache.cacheExclusion`, allowing business logic to customize if the current request should be excluced from being cached. 
+
 ## [1.4.0] - 2019-11-06
 
 ### Added
