@@ -12,7 +12,7 @@ and authenticated users.
 * Generate the static cache via command line by using the provided `super_static_cache:warmup` command.
 * Easier debugging: Flag pages served by the static cache with a customizable comment string in the source code. Default: `<!-- Served by static cache -->`.
 * Use the static cache with forms by injecting CSRF tokens via ajax call.
-* Allow different caches per domain.
+* Allow to store different caches per domain.
 
 ## Installation
 
